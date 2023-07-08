@@ -1,0 +1,17 @@
+08:08:21 **** Incremental Build of configuration Debug for project 11. LED_Blink_with_SysTick_Timer ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "11. LED_Blink_with_SysTick_Timer.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\STM32 learning\11. LED_Blink_with_SysTick_Timer\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="11. LED_Blink_with_SysTick_Timer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 11. LED_Blink_with_SysTick_Timer.elf
+ 
+arm-none-eabi-size   11.\ LED_Blink_with_SysTick_Timer.elf 
+arm-none-eabi-objdump -h -S  11.\ LED_Blink_with_SysTick_Timer.elf  > "11. LED_Blink_with_SysTick_Timer.list"
+   text	   data	    bss	    dec	    hex	filename
+    920	      8	   1568	   2496	    9c0	11. LED_Blink_with_SysTick_Timer.elf
+Finished building: default.size.stdout
+ 
+Finished building: 11. LED_Blink_with_SysTick_Timer.list
+ 
+
+08:08:22 Build Finished. 0 errors, 0 warnings. (took 719ms)
+

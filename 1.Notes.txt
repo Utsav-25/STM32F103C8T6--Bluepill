@@ -1,0 +1,18 @@
+Bare Metal STm32 programming:
+
+1. INITIALISING the Clock for CUP, Core and other peripherals.
+We need to initialise the clock, clock sources, PLL configuration 
+so that the required clock signal if fed to the CPU and other peripherals.
+
+1. Enable the HSE(High speed External source, usually Xtal) and wait for it to become stable
+2. Configure the flash prefetch and latency settings 
+(this is required because at high spped clock operation, we need to make user the flash 
+memory can support such speeds)
+3. Configure the clock for busses (AHB, APB1, APB2)
+4. Configure the PLL multiplier/ HSE divider
+5. Enable the PLL source and wait for it to become stable
+6. Enable the clock source and wait for it to set
+
+Note: All the configuration needs to be done before enabling the PLL clock source ( point 5 and 6) because after enabling the PLL, no configuration changes can be made.
+
+PWM Tutorial: https://www.youtube.com/watch?v=tYH94O2o2DM

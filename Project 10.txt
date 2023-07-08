@@ -1,0 +1,157 @@
+#include <stdint.h>
+#include "stm32f1xx.h"
+
+void system_clk() // creating a function to configure STM32 clock.Refer project 1 for details
+{
+
+	RCC->CR |= RCC_CR_HSEON; //HSE is 8Mhz in BluePill.
+	while(!(RCC->CR & RCC_CR_HSERDY));
+	FLASH->ACR |= FLASH_ACR_PRFTBE;
+	FLASH->ACR |= FLASH_ACR_LATENCY_1;
+	RCC->CFGR |= RCC_CFGR_PLLSRC;
+	RCC->CFGR |= RCC_CFGR_PLLXTPRE_HSE;
+	RCC->CFGR |= RCC_CFGR_PLLMULL4; // 8MHz * 4= 32Mhz of system clock
+	RCC->CFGR |= (RCC_CFGR_PPRE1_DIV1 | RCC_CFGR_PPRE2_DIV1 | RCC_CFGR_HPRE_DIV1);
+	RCC->CR |= RCC_CR_PLLON;
+	while(!(RCC->CR & RCC_CR_PLLRDY));
+	RCC->CFGR |= RCC_CFGR_SW_PLL;
+	while(!(RCC->CFGR & RCC_CFGR_SWS_PLL));
+}
+void timer2_init() // creating a function to initialize the timer.Check Project 2 for details
+{
+
+	TIM2->CR1 &= ~(TIM_CR1_CEN);
+	TIM2->SR &= ~(TIM_SR_UIF);
+	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+	TIM2->EGR |= TIM_EGR_UG;
+	TIM2->PSC = 32;
+	TIM2->ARR = 0xffff;
+	TIM2->CR1 |= TIM_CR1_CEN; // enable the timer
+}
+void delay_us(uint16_t us)
+{
+	TIM2->CNT=0;
+	while(TIM2->CNT< us);
+}
+void delay_ms(uint16_t ms)
+{
+	for(uint16_t i=0;i<ms;i++)
+	delay_us(1000);
+}
+
+void USART_PinConfig() //initializing the USART to print the ADC values. Check project 6 for details
+{
+	//Here, PA2->TX and PA3->RX. Both of these are NOT 5V tolerant so we need to be
+	//careful while using external USB to Serial converter
+
+	//enable the clock for USART2 and GPIOA pins
+	RCC->APB1ENR |= RCC_APB1ENR_USART2EN; // Enable the clock to USART2
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN; //Enable clock to GPIOA
+	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; //Enable the Alternate function clock
+
+	//configure the pin PA2 as output(TX) for alternate function
+	GPIOA->CRL |= ( GPIO_CRL_MODE2_1 | GPIO_CRL_MODE2_0 ); //setting output speed of PA2 to max 50Mhz
+	GPIOA->CRL |= GPIO_CRL_CNF2_1;    //setting as Alternate function output push pull
+	GPIOA->CRL &= ~(GPIO_CRL_CNF2_0); //setting as Alternate function output push pull
+	//configure the pin PA3 as input(RX) for alternate function
+	// As the defaults of PA3 are set as input, we do not need to make additional changes
+}
+void USART_BaudRate()
+{
+	USART2->BRR = 0xd05; //for baud of 9600 at 32Mhz bus clock.
+}
+void USART_Init()
+{
+	USART_PinConfig(); //initialize the pins PA2 and PA3 as Tx and Rx
+	//Set up the baud rate
+	USART_BaudRate();
+	//Enable the USART, Transmit and Receive
+	USART2->CR1 |= USART_CR1_UE; //enable the USART
+	//setting the word length
+	USART2->CR1 &= ~(USART_CR1_M); // 1 start bit, 8 data bits and n stop bit
+	USART2->CR1 |= USART_CR1_TE;   //USART2 transmit enable
+	USART2->CR1 |= USART_CR1_RE;   //USART2 transmit enable
+
+}
+
+//CREATING FUNCTIONS TO TRANSMIT AND RECEIVE DATA
+
+void USART_TransmitByte(uint8_t byte)
+{
+	while(!(USART2->SR & USART_SR_TXE)); // we are checking if the transmit data register is empty
+	USART2->DR = byte; //loading the contents to the data register
+	//while(!(USART2->SR & USART_SR_TC)); // checking if the data transmit has been completed by checking the status of TC bit
+}
+
+uint16_t USART_ReceiveByte(uint8_t byte)
+{
+	while(!(USART2->SR & USART_SR_RXNE)); // we are checking if the data is received. RXNE is 1 when read data register is not empty
+	return USART2->DR;
+}
+
+void USART_TransmitSrting( char *myString) // we are using a string pointer
+{
+	while(*myString) //passing value by reference
+		USART_TransmitByte(*myString++); // transmit the byte pointer by myString pointer
+	while(!(USART2->SR & USART_SR_TC)); // checking if the data transmit has been completed by checking the status of TC bit
+}
+
+void USART_NewLine()
+{
+	USART_TransmitByte('\n');
+}
+
+int val=0; // to store the ADC value
+void ADC_init()
+{
+	//Configuring ADC1 and using the ADC5 i.e. PA5 pin of STM32 for analog reading
+	GPIOA->CRL |= GPIO_CRL_CNF5_1; 	  //setting GPIO configuration as pull up-pull down
+	GPIOA->CRL &= ~(GPIO_CRL_CNF5_0); //setting GPIO configuration as pull up-pull down
+	// The mode of all pins is by default set as input, no bits to be set in the MODE bits
+	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;	// enabling the clock to the ADC peripheral
+	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; // enabling the alternate function
+	RCC->CFGR |= RCC_CFGR_ADCPRE_DIV4 ; // dividing the bus clock by 4. So we get 8Mhz for 32 Mhz bus clock
+	ADC1->CR1 |= ADC_CR1_EOCIE; // enable the end of conversion interrupt enable
+	NVIC_EnableIRQ(ADC1_2_IRQn);
+	ADC1->SMPR2 |= ADC_SMPR2_SMP5_0; // setting the max sample time for better readings
+	ADC1->SMPR2 |= ADC_SMPR2_SMP5_1; // setting the max sample time for better readings
+	ADC1->SMPR2 |= ADC_SMPR2_SMP5_2; // setting the max sample time for better readings
+	ADC1->SQR3 |= ADC_SQR3_SQ1_0; 	//setting up channel 5 as first sequence
+	ADC1->SQR3 |= ADC_SQR3_SQ1_2; 	//setting up channel 5 as first sequence
+	ADC1->SQR3 &= ~(ADC_SQR3_SQ1_1);//setting up channel 5 as first sequence
+	ADC1->SQR3 &= ~(ADC_SQR3_SQ1_3);//setting up channel 5 as first sequence
+	ADC1->CR2 |= ADC_CR2_CONT; //enabling the continuous mode
+	ADC1->CR2 |= ADC_CR2_ADON; //enabling the ADC
+	delay_ms(2); // slight delay
+	ADC1->CR2 |= ADC_CR2_ADON; //enabling the ADC for 2nd time to actually enable ADC
+	ADC1->CR2 |= ADC_CR2_CAL; // enable the calibration. The bit turns 0 when calibration is completed
+	//while(ADC1->CR2 & ADC_CR2_CAL); // wait until the calibration is completed.
+	delay_ms(2); // slight delay
+}
+
+// defining the interrupt handler
+void ADC1_2_IRQHandler(void)
+{
+	//if the end of conversion flag is set, get the value from the ADC data register
+	// at the end of coversion, the flag is cleared by reading the data register.
+	if(ADC1->SR & ADC_SR_EOC)
+	{
+		val= ADC1->DR;
+	}
+}
+
+int main(void)
+{
+system_clk();
+timer2_init();
+USART_Init();
+ADC_init();
+
+	while(1)
+	{
+		USART_TransmitSrting("Hello");
+		USART_NewLine();
+		delay_ms(10);
+	}
+return 0;
+}

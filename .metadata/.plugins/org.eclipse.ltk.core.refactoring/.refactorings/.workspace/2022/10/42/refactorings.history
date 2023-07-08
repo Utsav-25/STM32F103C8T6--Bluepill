@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;10.ADC_Val_on_UART&apos; to &apos;10.ADC_controlling LED blink&apos;" description="Rename resource &apos;10.ADC_Val_on_UART&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/10.ADC_Val_on_UART" name="10.ADC_controlling LED blink" stamp="1665852307715" updateReferences="true"/>
+</session>

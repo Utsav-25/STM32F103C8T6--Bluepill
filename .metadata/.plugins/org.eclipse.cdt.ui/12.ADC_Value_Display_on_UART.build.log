@@ -1,0 +1,10 @@
+19:41:17 **** Incremental Build of configuration Debug for project 12.ADC_Value_Display_on_UART ****
+make -j8 all 
+arm-none-eabi-size   12.ADC_Value_Display_on_UART.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1632	      8	   1568	   3208	    c88	12.ADC_Value_Display_on_UART.elf
+Finished building: default.size.stdout
+ 
+
+19:41:17 Build Finished. 0 errors, 0 warnings. (took 218ms)
+

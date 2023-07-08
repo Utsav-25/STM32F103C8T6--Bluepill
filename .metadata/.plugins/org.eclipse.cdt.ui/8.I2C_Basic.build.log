@@ -1,0 +1,35 @@
+20:45:39 **** Incremental Build of configuration Debug for project 8.I2C_Basic ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/I2C.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/I2C.d" -MT"Src/I2C.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/I2C.o"
+../Src/I2C.c: In function 'I2C_address_send_r':
+../Src/I2C.c:94:30: warning: bitwise comparison always evaluates to false [-Wtautological-compare]
+   94 |  if((I2C2->SR1 & I2C_SR1_AF) == 1) // if the acknowledge failure failure occurs
+      |                              ^~
+../Src/I2C.c:96:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   96 |   printf("error in sending read slave address\n");
+      |   ^~~~~~
+../Src/I2C.c:96:3: warning: incompatible implicit declaration of built-in function 'printf'
+../Src/I2C.c:3:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+    2 | #include "I2C.h"
+  +++ |+#include <stdio.h>
+    3 | 
+../Src/I2C.c:97:10: warning: 'return' with a value, in function returning void [-Wreturn-type]
+   97 |   return 0;
+      |          ^
+../Src/I2C.c:86:6: note: declared here
+   86 | void I2C_address_send_r(uint8_t slave_address)
+      |      ^~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "8.I2C_Basic.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\STM32 learning\8.I2C_Basic\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="8.I2C_Basic.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 8.I2C_Basic.elf
+ 
+arm-none-eabi-size   8.I2C_Basic.elf 
+arm-none-eabi-objdump -h -S  8.I2C_Basic.elf  > "8.I2C_Basic.list"
+   text	   data	    bss	    dec	    hex	filename
+    556	      8	   1568	   2132	    854	8.I2C_Basic.elf
+Finished building: default.size.stdout
+Finished building: 8.I2C_Basic.list
+ 
+ 
+
+20:45:40 Build Finished. 0 errors, 4 warnings. (took 841ms)
+

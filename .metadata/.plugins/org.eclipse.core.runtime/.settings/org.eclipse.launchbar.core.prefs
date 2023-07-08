@@ -1,0 +1,9 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:LED_Blink Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:3.LED_Blink_with_Timer_Delay Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:5.PWM_LED Control Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:11. LED_Blink_with_SysTick_Timer Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:10.ADC_controlling LED blink,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:7.UART_Transmit_Example Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:12.ADC_Value_Display_on_UART Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:14.Multiple_ADC_Values_on_UART Debug
+eclipse.preferences.version=1
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:10.ADC_Val_on_UART\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:12.ADC_Value_Display_on_UART\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:LED_Blink\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:LED_Blink\ Debug/activeLaunchTarget=null\:---

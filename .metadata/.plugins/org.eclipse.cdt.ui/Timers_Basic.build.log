@@ -1,0 +1,17 @@
+15:51:04 **** Incremental Build of configuration Debug for project Timers_Basic ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Timers_Basic.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\STM32 learning\Timers_Basic\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Timers_Basic.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Timers_Basic.elf
+ 
+arm-none-eabi-size   Timers_Basic.elf 
+arm-none-eabi-objdump -h -S  Timers_Basic.elf  > "Timers_Basic.list"
+   text	   data	    bss	    dec	    hex	filename
+    556	      8	   1568	   2132	    854	Timers_Basic.elf
+Finished building: default.size.stdout
+ 
+Finished building: Timers_Basic.list
+ 
+
+15:51:05 Build Finished. 0 errors, 0 warnings. (took 1s.24ms)
+

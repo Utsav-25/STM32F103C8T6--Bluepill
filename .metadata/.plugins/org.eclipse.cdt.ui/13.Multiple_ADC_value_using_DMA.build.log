@@ -1,0 +1,20 @@
+19:17:42 **** Build of configuration Debug for project 13.Multiple_ADC_value_using_DMA ****
+make -j8 all 
+arm-none-eabi-gcc -mcpu=cortex-m3 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f103c8tx.d" -MT"Startup/startup_stm32f103c8tx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Startup/startup_stm32f103c8tx.o" "../Startup/startup_stm32f103c8tx.s"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc -o "13.Multiple_ADC_value_using_DMA.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\STM32 learning\13.Multiple_ADC_value_using_DMA\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="13.Multiple_ADC_value_using_DMA.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 13.Multiple_ADC_value_using_DMA.elf
+ 
+arm-none-eabi-size   13.Multiple_ADC_value_using_DMA.elf 
+arm-none-eabi-objdump -h -S  13.Multiple_ADC_value_using_DMA.elf  > "13.Multiple_ADC_value_using_DMA.list"
+   text	   data	    bss	    dec	    hex	filename
+    564	      8	   1568	   2140	    85c	13.Multiple_ADC_value_using_DMA.elf
+Finished building: default.size.stdout
+ 
+Finished building: 13.Multiple_ADC_value_using_DMA.list
+ 
+
+19:17:43 Build Finished. 0 errors, 0 warnings. (took 964ms)
+

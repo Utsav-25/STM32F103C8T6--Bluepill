@@ -1,0 +1,14 @@
+I2C in STM32F103
+
+We will be using Master transmitter and master receiver mode
+
+We will be using PB10 and PB11 as our SDL2 and SDA2, utilizing the I2C 2 peripheral
+
+The first steps are:
+1. Enable the clock on GPIO, I2C peripheral and also the clock for alternate function.
+2. Configure the 2 pins PB10 and PB11 as alternate function open drain (open drain because we will be sending as well are receiving data) 
+3. Configure the CFreq or clock frequency on the I2C CR2 register. We are using 32 Mhz so value - 0x20 in hex
+4. Configure the clock control register (CCR) to generate the clock for SCL pin ( we will generate 50Khz)
+5. Configure the I2C TRise register to configure the rise time of SCL. Max rise time can be 1000ns
+	Calculation: Trise = 1000/ (1/fclk) = 1000 / (1/32) = 32
+	So Trise value =33 (which is 0x21 in hex) 

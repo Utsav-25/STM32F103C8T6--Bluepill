@@ -1,0 +1,10 @@
+12:37:33 **** Incremental Build of configuration Debug for project 10.ADC_controlling LED blink ****
+make -j8 all 
+arm-none-eabi-size   10.ADC_controlling\ LED\ blink.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1352	      8	   1568	   2928	    b70	10.ADC_controlling LED blink.elf
+Finished building: default.size.stdout
+ 
+
+12:37:33 Build Finished. 0 errors, 0 warnings. (took 206ms)
+

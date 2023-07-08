@@ -1,0 +1,14 @@
+../Src/main.c:4:6:system_clk	4	static
+../Src/main.c:21:6:timer2_init	4	static
+../Src/main.c:33:6:delay_us	16	static
+../Src/main.c:38:6:delay_ms	24	static
+../Src/main.c:43:6:delay_sec	24	static
+../Src/main.c:49:6:USART_PinConfig	4	static
+../Src/main.c:63:6:USART_BaudRate	4	static
+../Src/main.c:68:6:USART_Init	8	static
+../Src/main.c:84:6:USART_TransmitByte	16	static
+../Src/main.c:91:10:USART_ReceiveByte	16	static
+../Src/main.c:97:6:USART_TransmitSrting	16	static
+../Src/main.c:104:6:USART_NewLine	8	static
+../Src/main.c:109:5:USART_TransmitNumber	24	static
+../Src/main.c:130:5:main	8	static

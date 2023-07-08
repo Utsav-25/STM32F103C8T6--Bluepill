@@ -1,0 +1,7 @@
+../Src/I2C.c:5:6:I2C2_pin_conf	4	static
+../Src/I2C.c:22:6:I2C2_master_init	8	static
+../Src/I2C.c:47:6:I2C_start_condition_w	4	static
+../Src/I2C.c:58:6:I2C_start_condition_r	4	static
+../Src/I2C.c:71:6:I2C_address_send_w	16	static
+../Src/I2C.c:86:6:I2C_address_send_r	16	static
+../Src/I2C.c:107:6:databyte_send	16	static
