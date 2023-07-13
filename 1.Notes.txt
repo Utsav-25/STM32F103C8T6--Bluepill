@@ -1,6 +1,6 @@
 Bare Metal STm32 programming:
 
-1. INITIALISING the Clock for CUP, Core and other peripherals.
+1. INITIALISING the Clock for CPU, Core and other peripherals.
 We need to initialise the clock, clock sources, PLL configuration 
 so that the required clock signal if fed to the CPU and other peripherals.
 
